@@ -4,6 +4,7 @@ import Combine
 let url = URL(string: "https://applecodingacademy.com/testData/testImages.json")!
 
 let publisher = URLSession.shared.dataTaskPublisher(for: url)
+  .map { $0.data }
 
 let subscriber = publisher.sink(receiveCompletion: { completion in
   switch completion {
@@ -13,7 +14,6 @@ let subscriber = publisher.sink(receiveCompletion: { completion in
     print("Ha ocurrido un Error: \(error)")
   }
 }, receiveValue: { succes in
-  print(succes.data)
-  print(succes.response)
+  print(succes)
 })
 
