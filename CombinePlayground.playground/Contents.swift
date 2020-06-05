@@ -10,7 +10,7 @@ let url = URL(string: "https://applecodingacademy.com/testData/testImages.json")
 let publisher = URLSession.shared.dataTaskPublisher(for: url)
   .map { $0.data }
   .decode(type: JSONImages.self, decoder: JSONDecoder())
-  .map { $0.images}
+  .map { $0.images.first! }
 
 let subscriber = publisher.sink(receiveCompletion: { completion in
   switch completion {
