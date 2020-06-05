@@ -25,7 +25,10 @@ let publisher = URLSession.shared.dataTaskPublisher(for: url)
   .map { $0.data }
   .decode(type: JSONImages.self, decoder: JSONDecoder())
   .map { $0.images.first! }
-  .map { URL(string: $0) }
+  .map { URL(string: $0)! }
+  .flatMap {
+    getImage(url: $0)
+}
 
 let subscriber = publisher.sink(receiveCompletion: { completion in
   switch completion {
@@ -36,5 +39,6 @@ let subscriber = publisher.sink(receiveCompletion: { completion in
   }
 }, receiveValue: { succes in
   print(succes)
+  succes
 })
 
