@@ -28,7 +28,7 @@ let publisher = URLSession.shared.dataTaskPublisher(for: url)
   .map { URL(string: $0)! }
   .flatMap {
     getImage(url: $0)
-}
+}.eraseToAnyPublisher()
 
 let subscriber = publisher.sink(receiveCompletion: { completion in
   switch completion {
