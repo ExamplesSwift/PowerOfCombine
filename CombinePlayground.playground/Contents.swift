@@ -7,6 +7,20 @@ struct JSONImages : Codable {
 
 let url = URL(string: "https://applecodingacademy.com/testData/testImages.json")!
 
+func getImage(url: URL) -> AnyPublisher<UIImage, Error> {
+  URLSession.shared.dataTaskPublisher(for: url)
+    .map {
+      $0.data
+  }
+  .compactMap {
+    UIImage(data: $0)
+  }
+  .mapError {
+    $0 as Error
+  }
+  .eraseToAnyPublisher()
+}
+
 let publisher = URLSession.shared.dataTaskPublisher(for: url)
   .map { $0.data }
   .decode(type: JSONImages.self, decoder: JSONDecoder())
