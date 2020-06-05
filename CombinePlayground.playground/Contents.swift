@@ -11,6 +11,7 @@ let publisher = URLSession.shared.dataTaskPublisher(for: url)
   .map { $0.data }
   .decode(type: JSONImages.self, decoder: JSONDecoder())
   .map { $0.images.first! }
+  .map { URL(string: $0) }
 
 let subscriber = publisher.sink(receiveCompletion: { completion in
   switch completion {
