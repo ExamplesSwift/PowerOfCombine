@@ -1,3 +1,6 @@
 import UIKit
+import Combine
 
-var str = "Hello, playground"
+let url = URL(string: "https://applecodingacademy.com/testData/testImages.json")!
+
+let publisher = URLSession.shared.dataTaskPublisher(for: url)
